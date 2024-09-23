@@ -8,7 +8,6 @@ dotenv.config(); // Load environment variables from .env file
 const app = express();
 app.use(bodyParser.json());
 
-// Your API key should be stored in the .env file
 const MELISSA_API_KEY = process.env.MELISSA_API_KEY;
 
 app.post('/api/submit', async (req, res) => {
@@ -17,7 +16,7 @@ app.post('/api/submit', async (req, res) => {
   for (const entry of inputData) {
     const { fullName, age, address, phoneNumber } = entry;
 
-    const melissaApiUrl = `https://personator.melissadata.net/v3/WEB/ContactVerify/doContactV`;
+    const melissaApiUrl = `https://personator.melissadata.net/v3/WEB/ContactVerify/doContactVerify`;
 
     try {
       const response = await axios.get(melissaApiUrl, {
@@ -25,8 +24,8 @@ app.post('/api/submit', async (req, res) => {
           id: MELISSA_API_KEY,
           full: fullName,
           a: address,
-          phone: phoneNumber
-        }
+          phone: phoneNumber,
+        },
       });
 
       console.log(`Melissa API Response for ${fullName}:`, response.data);
